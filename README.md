@@ -1,2 +1,2 @@
 # pswai
-PSWAI: A "Plate Solving Where Am I" application for astronomy
+PSWAI: A "Plate Solved Where Am I" application for astronomy
