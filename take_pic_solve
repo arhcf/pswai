@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+# PSWAI: A Plate Solved Where Am I  application
+# Copyright (C) 2018 arhcf (user arhcf at github 2018)
+# This file is part of the pswai project.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 
+#
+#
+# takes a pic using pic.py, downloads it using lftp and solves it using
+# plate solver
+#
+# Needs pic.py lftp and plate solver like 
+# astrometry.net's solve-field installed
+#
+
+top=`dirname $0`
+top=`cd $top; pwd -P`
+xyip=$XYIIP
+#echo "XYI IP is $xyip"
+#echo $top
+
+/usr/bin/pkill solve-field
+rundir=/tmp/pushto
+mkdir -p $rundir
+cd $rundir
+
+
+\rm -f $rundir/radec.hist.txt
+touch $rundir/radec.hist.txt
+
+
+opd=$rundir
+tmout="-l 40"
+
+dt=`date +"%s"`
+rfile=`$top/pic.py`
+lftp -e "set xfer:clobber true; get -O $opd  $rfile  ; quit" -u root, $xyip > /dev/null 2>&1
+mv $(basename $rfile) capt.jpg
+
+# Any plate solver can be used, here is an example using solve-field from astrometry.net
+
+solve-field --tweak-order 2 --sigma 12.0  --scale-units degwidth --scale-low 3 --scale-high 8 capt.jpg --out capt.solved --overwrite --no-plot   $tmout  > solve.log 2>&1
+retv=$?
+if [ $retv -eq 0 ]; then
+  r1=`grep "(RA,Dec)" solve.log | awk '{print $5,$6}' | sed -e "s/(//g" -e "s/)//g" -e "s/\,//g"` 
+  r2=`grep "rotation" solve.log | awk '{print $2,$6}' | sed -e "s/(//g" -e "s/)//g" -e "s/\,//g"` 
+  echo -n $dt" "
+  echo $r1" "$r2 | tee $rundir/radec.txt
+  cat $rundir/radec.txt >> $rundir/radec.hist.txt
+  exit 0
+else
+  exit 1
+fi
+  
