@@ -14,7 +14,7 @@ PSWAI: A "Plate Solved Where Am I" application for astronomy
  * You need to get a plate solver. The [astrometry.net](https://github.com/dstndstn/astrometry.net "Astrometry.net") platesolver is used here as an example but you can use any other by modifying the take_pic_solve scripts.
  * Required python libraries like python-cwiid (used by remote.py for the wiimote connect)
  * lftp to get the files from the Xiaomy Yi Action cam.
- * The setup here assumes you computer uses Wifi to connect to the camera, and an ethernet connection to connect to your home network.
+ * The setup here assumes your computer uses Wifi to connect to the camera, and an ethernet connection to connect to your home network ie you need two network connections. You could also do it with one network connection by having the Yi connect to your local network, but it has a terrible range, and the image will take a long time downloading, making the plate solve lag a lot longer. If you want to do that look at the nutseynuts site in the link below on how to connect to a local network. You would also have to set XYIIP appropriately.
  
  ## How to run
  * Use the Xiaomi Yi app to connect to the camera, learn how to use the app, update to the lastest firmware etc.
