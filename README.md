@@ -21,7 +21,7 @@ PSWAI: A "Plate Solved Where Am I" application for astronomy
  * Choose your options, like auto enable wifi, turn off leds, disable fisheye correction (important for plate solving), choose 8M jpeg as picture type.
  * Add autoexec.ash and an empty file called enable_info_display.script to the root (topmost) folder of the micro sd card to enable telnet to the cam.
  * You need to set 2 enviroment variables (using setenv, export etc depending on your shell)
-    * XYIIP: This is the IP of camera. The hotspot IP of my camera is 192.168.42.1
+    * XYIIP: This is the IP of camera. The hotspot IP of the camera is something like 192.168.42.1. You can use ifconfig -a to find out after you connect to the Yi hotspot.
     * MYIP: This is the IP of the computer running the scripts.
  * At this point you can run the script take_pic_solve to 
  * You can set the above env variables in the start.all script and run it, or set the env vars in the shell, and run encoder.py and remote.py on two different windows. If you do not have a wiimote you can just rum encoder.py on one window, and run take_pic_solve on another window when you want to take a pic.
