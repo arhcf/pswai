@@ -1,6 +1,10 @@
 # pswai
 PSWAI: A "Plate Solved Where Am I" application for astronomy
 
+## What it does
+Takes images of the night sky with a camera, plate solves them for location and hooks it up
+to Sky Safari to display current location in the sky.
+
 ## File Descriptions
 * autoexec.ash: This file controls the settings of the Xiaomi Yi Action Cam and needs to put placed in root (topmost) folder of the microsd card.
 * pic.py: Takes a pic on the Xiaomi Yi Action Cam, using json commands and prints out the filename.
