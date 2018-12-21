@@ -7,7 +7,7 @@ to Sky Safari to display current location in the sky.
 
 ## Cloudynights post with description
 
-https://www.cloudynights.com/topic/644024-pswai-a-diy-plate-solved-push-to-for-visual-astronomy/
+https://www.cloudynights.com/topic/644024-pswai-a-diy-plate-solved-push-to-for-visual-astronomy/?p=9023950
 
 ## File Descriptions
 * autoexec.ash: This file controls the settings of the Xiaomi Yi Action Cam and needs to put placed in root (topmost) folder of the microsd card.
