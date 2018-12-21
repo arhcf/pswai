@@ -22,7 +22,7 @@
 # Do you own research before using these commands as it could
 # potentially brick your camera.
 #
-#Script created by xyc.sh 0.2.0
+
 #ISO values: 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600
 #shutter speed values: 0 == automatic, 1==7.9s, 8==7.7f, 50==6.1s. 
 #100==4.6s, 200==2.7s, 400==1sec, 590==1/3sec, 600==1/5sec, 800==1/10sec, 
