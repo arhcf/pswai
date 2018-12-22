@@ -36,7 +36,7 @@ https://www.cloudynights.com/topic/644024-pswai-a-diy-plate-solved-push-to-for-v
  * Pair the wiimote with the Pi soon after runnning start.all as it times out after a while.
  * On skysafari (pro/plus) you need to set the scope type to "Basic Encoder", the mount type to "Equatorial Go to" (other Equatorial types might work as well), Encoder Steps to +8192 for both RA,DEC, IP address to the MYIP or IP address of the computer running these scripts, and Port Number to 4000.
  * You need to have encoder.py running on the computer before you can connect the scope in sky safari.
- * If everything works you can click on the wiimote, hear the shutter sounds, and feel the remote rumble after about 20 seconds when it updates the sky safari location. If you do not have a wiimote you can run the take_pic_solve script from a window on the computer.
+ * If everything works you can click the main button (Button A) on the wiimote, hear the shutter sounds, and feel the remote rumble after about 20 seconds when it updates the sky safari location. If you do not have a wiimote you can run the take_pic_solve script from a window on the computer.
  * Do a 2 star alignment in sky safari and you are good to go.
  
  ## Important links about the Xiaomi Yi Action Cam
