@@ -19,7 +19,7 @@
 
 # This script has been tried on a 2K Xiaomi Yi Action Camera 
 # Hardware version: 25L Firmware version: 1.5.12
-# Do you own research before using these commands as it could
+# Do your own research before using these commands as it could
 # potentially brick your camera.
 #
 
