@@ -31,7 +31,7 @@ https://www.cloudynights.com/topic/644024-pswai-a-diy-plate-solved-push-to-for-v
  * You need to set 2 enviroment variables (using setenv, export etc depending on your shell)
     * XYIIP: This is the IP of camera. The hotspot IP of the camera is something like 192.168.42.1. You can use ifconfig -a to find out after you connect to the Yi hotspot.
     * MYIP: This is the IP of the computer running the scripts.
- * At this point you can run the script take_pic_solve to 
+ * At this point you can run the script take_pic_solve to test out the picture taking and the platesolver.
  * You can set the above env variables in the start.all script and run it, or set the env vars in the shell, and run encoder.py and remote.py on two different windows. If you do not have a wiimote you can just rum encoder.py on one window, and run take_pic_solve on another window when you want to take a pic.
  * Pair the wiimote with the Pi soon after runnning start.all as it times out after a while.
  * On skysafari (pro/plus) you need to set the scope type to "Basic Encoder", the mount type to "Equatorial Go to" (other Equatorial types might work as well), Encoder Steps to +8192 for both RA,DEC, IP address to the MYIP or IP address of the computer running these scripts, and Port Number to 4000.
