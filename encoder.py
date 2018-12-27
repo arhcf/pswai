@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-#
+
 import sys
 import os
 import socket
@@ -30,6 +30,8 @@ from threading import *
 def radec():
     ra = "0"
     dec = "0"
+    ticks = 8192
+
     if not os.access("/tmp/pushto/radec.txt", os.R_OK):
       return (ra,dec)
     fileo=open("/tmp/pushto/radec.txt", 'r')
@@ -46,21 +48,22 @@ def radec():
     tha = 15*(float(lta[0])+float(lta[1])/60+float(lta[2])/3600)
     myra = myra - tha  # subtract hour angle from ra
     if (myra < 0.0):
-       myra = myra +360.0
-    ra = "+%d" % int((myra*8192/360)%8192)
+          myra = myra +360.0
+    ra = "+%d" % int((myra*ticks/360)%ticks)
     if(mydec>0) :
-        dec  = "+%d" % int(mydec*8192/360)
+          dec  = "+%04d" % int(mydec*ticks/360) # "+" explicit
     else:
-        dec = "%d" % int(mydec*8192/360)
+          dec = "%05d" % int(mydec*ticks/360)  # includes "-"
     print ra,dec,myra,mydec,tha
     fileo.close()
     return ra,dec
 
 class client(Thread):
-    def __init__(self, socket, address):
+    def __init__(self, socket, address, mode):
         Thread.__init__(self)
         self.sock = socket
         self.addr = address
+        self.mode = mode
         self.ra=0
         self.dec=0
         print "Starting thread for",address
@@ -68,7 +71,8 @@ class client(Thread):
 
 
     def run(self):
-            #while 1:
+        finish = 0
+        while not finish:
 	    rbuf=self.sock.recv(20).decode();
             if(rbuf and rbuf[0] == 'Q') :
                xra,xdec=radec()
@@ -77,15 +81,24 @@ class client(Thread):
                   self.dec = xdec
 	       sbuf="%s\t%s\r" % (self.ra,self.dec)
                self.sock.send(sbuf)
+            if (mode != 1 ) :
+                finish  = 1
 
              
              
 
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
 host = os.environ["MYIP"]
-port = 4000
+mode = 0
+if ( (len(sys.argv) == 2) and (sys.argv[1] == "indi")) :
+    mode = 1
+    port = 4001
+    print "For Indi IP: ", host," Port: ", port
+else :
+    mode = 0
+    port = 4000
+    print "For Sky Safari IP: ", host," Port: ", port
 print (host)
 print (port)
 serversocket.bind((host, port))
@@ -94,4 +107,4 @@ serversocket.listen(5)
 print ('server started and listening')
 while 1:
     clientsocket, address = serversocket.accept()
-    client(clientsocket, address)
+    client(clientsocket, address, mode)
