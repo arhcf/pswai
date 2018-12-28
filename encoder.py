@@ -67,6 +67,7 @@ class client(Thread):
         self.ra=0
         self.dec=0
         print "Starting thread for",address
+        self.daemon = True
         self.start()
 
 

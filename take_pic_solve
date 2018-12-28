@@ -47,6 +47,13 @@ tmout="-l 40"
 
 dt=`date +"%s"`
 rfile=`$top/pic.py`
+rval=$?
+if [ $rval -ne 0 ]
+then
+   echo $rfile
+   exit 1
+fi
+
 lftp -e "set xfer:clobber true; get -O $opd  $rfile  ; quit" -u root, $xyip > /dev/null 2>&1
 mv $(basename $rfile) capt.jpg
 

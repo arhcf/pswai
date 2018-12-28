@@ -32,7 +32,11 @@ camaddr = os.environ["XYIIP"]
 camport = 7878
 
 srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-srv.connect((camaddr, camport))
+try:
+    srv.connect((camaddr, camport))
+except Exception as e:
+    print "Error: Could not cpnnect to ", camaddr, ":", camport, " due to Exception ", e
+    sys.exit(1) 
 
 srv.send('{"msg_id":257,"token":0}')
 
