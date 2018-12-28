@@ -46,13 +46,14 @@ opd=$rundir
 tmout="-l 40"
 
 dt=`date +"%s"`
-rfile=`$top/pic.py`
+ping -c 1 -w 3 $XYIIP > /dev/null 2>&1
 rval=$?
 if [ $rval -ne 0 ]
 then
-   echo $rfile
+   echo "Cannot access IP $XYIIP .... exiting ...."
    exit 1
 fi
+rfile=`$top/pic.py`
 
 lftp -e "set xfer:clobber true; get -O $opd  $rfile  ; quit" -u root, $xyip > /dev/null 2>&1
 mv $(basename $rfile) capt.jpg
