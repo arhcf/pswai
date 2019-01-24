@@ -45,7 +45,7 @@ touch $rundir/radec.hist.txt
 opd=$rundir
 tmout="-l 40"
 
-dt=`date +"%s"`
+#dt=`date +"%s"`
 ping -c 1 -w 3 $XYIIP > /dev/null 2>&1
 rval=$?
 if [ $rval -ne 0 ]
@@ -54,8 +54,9 @@ then
    exit 1
 fi
 rfile=`$top/pic.py`
+pdt=`date +"%H:%M:%S"`
 
-lftp -e "set xfer:clobber true; get -O $opd  $rfile  ; quit" -u root, $xyip > /dev/null 2>&1
+lftp -e "set xfer:clobber true; get -O $opd  $rfile  ; quit" -u root, $xyip  > /dev/null 2>&1
 mv $(basename $rfile) capt.jpg
 
 # Any plate solver can be used, here is an example using solve-field from astrometry.net
@@ -65,8 +66,7 @@ retv=$?
 if [ $retv -eq 0 ]; then
   r1=`grep "(RA,Dec)" solve.log | awk '{print $5,$6}' | sed -e "s/(//g" -e "s/)//g" -e "s/\,//g"` 
   r2=`grep "rotation" solve.log | awk '{print $2,$6}' | sed -e "s/(//g" -e "s/)//g" -e "s/\,//g"` 
-  echo -n $dt" "
-  echo $r1" "$r2 | tee $rundir/radec.txt
+  echo $pdt" "$r1" "$r2 | tee $rundir/radec.txt
   cat $rundir/radec.txt >> $rundir/radec.hist.txt
   exit 0
 else

@@ -28,7 +28,7 @@
 
 rundir="/tmp/pushto"
 mkdir -p $rundir
-echo "83.822 -5.391" > $rundir/radec.txt
-read -p "Align to M42 press enter when done: "
-echo "148.905 69.065" > $rundir/radec.txt
-read -p "Align to M81 press enter when done: "
+echo `date +"%H:%M:%S"` " 83.822 -5.391" > $rundir/radec.txt
+read -p "Align Skysafari/Kstars to M42 press enter when done: "
+echo `date +"%H:%M:%S"` " 148.905 69.065" > $rundir/radec.txt
+read -p "Align Skysafari/Kstars to M81 press enter when done: "

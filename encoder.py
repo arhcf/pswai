@@ -18,6 +18,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
+# Usage:
+# encoder.py [track] [indi]
+#    track: Used for moutns that track (default is  no tracking )
+#    indi: Used if you want to use indi/kstars/ekos instead of sky safari
+#          defauklt is sky safari
+
 import sys
 import os
 import socket
@@ -36,25 +42,33 @@ def radec():
       return (ra,dec)
     fileo=open("/tmp/pushto/radec.txt", 'r')
     ln = fileo.readline().split()
-    if (len(ln) < 2 ) or (len(ln) > 5):
+    if (len(ln) < 3 ) or (len(ln) > 5):
        return ("0","0")
     try:
-       myra=float(ln[0])
-       mydec=float(ln[1])
+       mytm=ln[0]
+       myra=float(ln[1])
+       mydec=float(ln[2])
     except (ValueError, IndexError):
        print "Value error, continuing ....", ln
        return ("0","0")
-    lta = time.strftime("%H,%M,%S").split(',')
+    
+    # If tracking is on, assume current time
+    if (track == 1):
+      lta = time.strftime("%H:%M:%S").split(':')
+    # If tracking is off, assume time when pic was taken 
+    else: 
+      lta = mytm.split(':')
     tha = 15*(float(lta[0])+float(lta[1])/60+float(lta[2])/3600)
     myra = myra - tha  # subtract hour angle from ra
     if (myra < 0.0):
           myra = myra +360.0
-    ra = "+%d" % int((myra*ticks/360)%ticks)
+    ra = "+%04d" % int((myra*ticks/360)%ticks)
     if(mydec>0) :
           dec  = "+%04d" % int(mydec*ticks/360) # "+" explicit
     else:
           dec = "%05d" % int(mydec*ticks/360)  # includes "-"
-    print ra,dec,myra,mydec,tha
+    ptime = "%d:%d:%d" % (int(lta[0]),int(lta[1]),int(lta[2]))
+    print ptime,ra,dec,myra,mydec,tha
     fileo.close()
     return ra,dec
 
@@ -92,8 +106,21 @@ class client(Thread):
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = os.environ["MYIP"]
 mode = 0
-if ( (len(sys.argv) == 2) and (sys.argv[1] == "indi")) :
-    mode = 1
+argsnum = len(sys.argv)
+track = 0
+argi = 1
+while (argi < argsnum) :
+  if ( sys.argv[argi] == "indi") :
+     mode = 1
+  elif ( sys.argv[argi] == "track") :
+     track = 1
+  else :
+      print "Bad option: %s" % (sys.argv[argi])
+      print "Usage: encoder.py [track] [indi]"
+      sys.exit(1)
+  argi = argi +1
+
+if ( mode == 1) :
     port = 4001
     print "For Indi IP: ", host," Port: ", port
 else :
