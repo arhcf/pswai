@@ -39,7 +39,7 @@ https://www.cloudynights.com/topic/644024-pswai-a-diy-plate-solved-push-to-for-v
  * If everything works you can click the main button (Button A) on the wiimote, hear the shutter sounds, and feel the remote rumble after about 20 seconds when it updates the sky safari location. If you do not have a wiimote you can run the take_pic_solve script from a window on the computer.
  * Do a 2 star alignment in sky safari and you are good to go.
  
-## Teacking
+## Tracking
  Added a different mode for tracking mounts. "encoder.py [track] [indi] " . The option  "track" assumes the mount tracks, so keeps the Hour Angle  (HA) updating in between pics. If you do not provide option "track", it assumes the mount does not track and always uses the HA when the pic was taken. This lets you have matching views to Skysafari (or Kstars/Stellarium) if you look at the EP sometime after the pic was taken. This helps if the platesolving lag is big too. The default options if you just run "encoder.py" are "no tracking" and "Skysafari".
 
 
